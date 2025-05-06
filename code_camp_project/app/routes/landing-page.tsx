@@ -5,6 +5,6 @@ export default function Home() {
   
   return (
     <>
-      Sorry! We didnt add the home page yet
+      Sorry! We didnt add the landing page yet
     </>
 )}
