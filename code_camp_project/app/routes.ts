@@ -6,6 +6,6 @@ import {
   export default [
     route("/", "./routes/landing-page.tsx"),
     route("/home", "./routes/home.tsx"),
-    route("/login", "./routes/login.tsx"),
-    route("/register", "./routes/register.tsx"),
+    route("/ask/:bot_id", "./routes/ask.tsx"),
+    route("/ask", "./routes/ask.tsx"),
   ] satisfies RouteConfig;

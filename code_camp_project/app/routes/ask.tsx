@@ -5,6 +5,6 @@ export default function Home() {
   
   return (
     <>
-      Sorry! We didnt add the login page yet
+      
     </>
 )}
