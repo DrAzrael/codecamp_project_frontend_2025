@@ -1,11 +1,58 @@
 import type { Route } from "./+types/home";
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 
+interface BotData {
+  // Define your data structure here
+  id: string;
+  pfp_url: string;
+  name: string;
+  description: string; 
+  guidelines: string;
+  // ... other fields
+}
+
+
 const HomeScreen = () => {
   // Sample data for the grid items, tutaj api i moovąć to niżej do miejsca renderowania żeby grabbowało wartosć z searchbara
+  const [bots, setBots] = useState<BotData[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/searchBots?search=wal');
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        console.log('Fetched data:', data);
+        setBots(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setError(error instanceof Error ? error.message : 'An unknown error occurred');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+
+  return (
+    <div>
+      <h1>Search Bots</h1>
+      <pre>{JSON.stringify(bots, null, 2)}</pre>
+    </div>
+  );
   const gridItems = [
     {
       id: 1,
